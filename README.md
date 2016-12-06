@@ -25,3 +25,7 @@ You could share your learning experience to make this easier for others taking t
 You could fork this repo, make our code better and make a pull request. We'd be grateful.
 
 You could make life easier for a coding newbie by providing help when they are stuck.
+
+You could add questions and/or tag existing questions.
+
+Create a GitHub issue if you spot a way this could be improved.
