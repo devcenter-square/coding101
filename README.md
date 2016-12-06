@@ -18,14 +18,14 @@ coding101 is NOT for you if you already know-it-all.
 
 ## How can I contribute?
 
-Many developers go down the road to learning development alone. 
+Many developers go down the road to learning development alone. You could help by:
 
-You could share your learning experience to make this easier for others taking this road.
+- You could share your learning experience to make this easier for others taking this road.
 
-You could fork this repo, make our code better and make a pull request. We'd be grateful.
+- You could fork this repo, make our code better and make a pull request. We'd be grateful.
 
-You could make life easier for a coding newbie by providing help when they are stuck.
+- You could make life easier for a coding newbie by providing help when they are stuck.
 
-You could add questions and/or tag existing questions.
+- You could add questions and/or tag existing questions.
 
-Create a GitHub issue if you spot a way this could be improved.
+- Create a GitHub issue if you spot a way this could be improved.
