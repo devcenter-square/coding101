@@ -15,15 +15,25 @@
 html {
   font-size: 62.5%; }
 
+a {
+  color: black;
+  text-decoration: none; }
+
 a:hover {
   text-decoration: none;
-  color: inherit; }
+  color: #888; }
+
+.active {
+  font-weight: bold; }
 
 .text-white {
   color: #fff; }
 
 .text-black {
   color: #000; }
+
+.text-grey {
+  color: #ccc; }
 
 .text-u-c {
   text-transform: uppercase; }
@@ -948,8 +958,79 @@ textarea {
   font: inherit;
   /* 2 */ }
 
-.nav ul {
-  list-style: none; }
+.header {
+  padding: 40px 0; }
+  .header a {
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 2px; }
+    .header a:hover {
+      color: #888; }
+  .header .nav-logo {
+    font-weight: bold; }
+  .header .nav-link {
+    margin-top: 20px; }
+    .header .nav-link a {
+      margin-right: 20px; }
+
+.borderline {
+  border: 1px solid #eee; }
+
+.tracks .list {
+  margin: 15px 0; }
+  .tracks .list .title {
+    font-weight: bold;
+    font-size: 1.7em; }
+  .tracks .list .sub-title {
+    color: #ccc; }
+  .tracks .list a {
+    float: right;
+    font-weight: bold; }
+
+.new-track .nav p {
+  font-weight: bold; }
+
+.new-track .nav a {
+  margin-left: 10px;
+  color: #000; }
+
+.new-track-active {
+  color: #000;
+  font-weight: bold; }
+
+.add-track i {
+  margin-right: 10px; }
+
+.questions i {
+  margin-right: 10px; }
+
+.new-question .nav p {
+  font-weight: bold; }
+
+.new-question .nav a {
+  margin-left: 10px;
+  color: #000; }
+
+.another-answer i {
+  margin-right: 10px; }
+
+.form .form-control {
+  margin-bottom: 30px;
+  border-top: none;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  border-color: #ccc;
+  background-color: transparent; }
+
+input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+  margin-bottom: 30px;
+  border-top: none;
+  border-right: 0;
+  border-left: 0;
+  border-radius: 0;
+  border-color: #ccc; }
 
 @font-face {
   font-family: 'Font-Name';
@@ -958,41 +1039,10 @@ textarea {
   font-weight: normal;
   font-style: normal; }
 
-@media print {
-  * {
-    background: transparent !important;
-    color: #000 !important;
-    box-shadow: none !important;
-    text-shadow: none !important; }
-  a,
-  a:visited {
-    text-decoration: underline; }
-  a[href]:after {
-    content: " (" attr(href) ")"; }
-  abbr[title]:after {
-    content: " (" attr(title) ")"; }
-  .ir a:after,
-  a[href^="javascript:"]:after,
-  a[href^="#"]:after {
-    content: ""; }
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid; }
-  thead {
-    display: table-header-group; }
-  tr,
-  img {
-    page-break-inside: avoid; }
-  img {
-    max-width: 100% !important; }
-  @page {
-    margin: 0.5cm; }
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3; }
-  h2,
-  h3 {
-    page-break-after: avoid; } }
+@media only screen and (min-width: 550px) {
+  .header .nav-link {
+    float: right;
+    margin-top: 0; }
+    .header .nav-link a {
+      margin-left: 20px;
+      margin-right: 0; } }

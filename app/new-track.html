@@ -39,42 +39,47 @@
 
     <section class="borderline"></section>
 
-    <section class="container add-track m-t-xl m-b-xl">
-      <a href="new-track.html"><i class="fa fa-plus"></i>New Track</a>
-    </section>
+    <section class="container new-track m-t-xl">
+      <form class="form">
 
-    <section class="container tracks">
+        <div class="row nav">
+          <div class="eight columns">
+            <p>New Track</p>
+          </div>
 
-      <div class="row list">
+          <div class="four columns">
+            <div class="u-pull-right">
+              <a href="#">Cancel</a>
+              <a class="new-track-active" href="#">Save</a>
+            </div>
+          </div>
+        </div>
 
-        <div class="eight columns">
-          <p class="title">Coding With HTML / CSS</p>
-          <p class="sub-title"><em>coding-with-html.</em> 3 resources</p>
-        </div>
-        <div class=" four columns">
-          <a href="#">Manage Track</a>
-        </div>
-      </div>
+        <div class="row m-t-xl">
 
-      <div class="row list">
-        <div class="eight columns">
-          <p class="title">Back End: Javascript</p>
-          <p class="sub-title"><em>back-end-javascript.</em> 3 resources</p>
-        </div>
-        <div class="four columns">
-          <a href="#">Manage Track</a>
-        </div>
-      </div>
+          <div class="four columns">
+            <label>Track Details</label>
+          </div>
+          <div class="eight columns">
+            <input class="form-control u-full-width" placeholder="Track Name" type="text" required>
+            <textarea class="form-control u-full-width" placeholder="Track Details(Markdown)" required></textarea>
+          </div>
 
-      <div class="row list">
-        <div class="eight columns">
-          <p class="title">Front End: Javascript</p>
-          <p class="sub-title"><em>front-end-javascript.</em> 3 resources</p>
         </div>
-        <div class="four columns">
-          <a href="#">Manage Track</a>
+
+        <div class="row m-t-xl">
+
+          <div class="four columns">
+            <label>Track Resources</label>
+          </div>
+          <div class="eight columns">
+            <input class="form-control u-full-width" placeholder="Link Url" type="text" required>
+            <input class="form-control u-full-width" placeholder="Link Url" type="text" required>
+          </div>
+
         </div>
-      </div>
+
+      </form>
     </section>
 
     <script src="assets/js/scripts.min.js"></script>
