@@ -1,3 +1,72 @@
-.main {
+// tracks page
+.tracks {
+  .list {
+    margin: 15px 0;
+    .title {
+      font-weight: bold;
+      font-size: 1.7em;
+    }
+    .sub-title {
+      color: #ccc;
+    }
+    a {
+      float: right;
+      font-weight: bold;
+    }
+  }
+}
 
+// new track page
+.new-track {
+  .form {
+
+  }
+  .nav {
+    p {
+      font-weight: bold;
+    }
+    a {
+      margin-left: 10px;
+      color: #000;
+    }
+  }
+}
+
+.new-track-active {
+  color: #000;
+  font-weight: bold;
+}
+
+.add-track {
+  i {
+    margin-right: 10px;
+  }
+}
+
+// questions page
+.questions {
+  i {
+    margin-right: 10px;
+  }
+}
+
+// new question page
+.new-question {
+  .form {
+
+  }
+  .nav {
+    p {
+      font-weight: bold;
+    }
+    a {
+      margin-left: 10px;
+      color: #000;
+    }
+  }
+}
+.another-answer {
+  i {
+    margin-right: 10px;
+  }
 }

@@ -6,15 +6,25 @@
 html {
   font-size: 62.5%;
 }
+a {
+  color: black;
+  text-decoration: none;
+}
 a:hover {
   text-decoration: none;
-  color: inherit;
+  color: #888;
+}
+.active {
+  font-weight: bold;
 }
 .text-white {
   color: #fff;
 }
 .text-black {
   color: #000;
+}
+.text-grey {
+  color: #ccc
 }
 .text-u-c {
   text-transform: uppercase;
