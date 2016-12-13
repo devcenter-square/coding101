@@ -9,7 +9,9 @@
 
 * {
   box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility; }
 
 html {
@@ -981,9 +983,10 @@ textarea {
   margin: 15px 0; }
   .tracks .list .title {
     font-weight: bold;
-    font-size: 1.7em; }
+    font-size: 1.7em;
+    margin-bottom: 0; }
   .tracks .list .sub-title {
-    color: #ccc; }
+    color: #777; }
   .tracks .list a {
     float: right;
     font-weight: bold; }
@@ -1024,7 +1027,15 @@ textarea {
   border-color: #ccc;
   background-color: transparent; }
 
-input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
   margin-bottom: 30px;
   border-top: none;
   border-right: 0;
