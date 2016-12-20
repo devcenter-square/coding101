@@ -30,8 +30,43 @@
                 </div>
             </nav>
         </header>
+        <section class="borderline"></section>
         <router-view></router-view>
     </div>
+
+    <!-- Templates -->
+    <script type="text/x-template" id="TrackList">
+        <section class="container">
+            <div class="add-track m-t-xl m-b-xl">
+                <router-link to="/tracks/new"><i class="fa fa-plus"></i>New Track</router-link>
+            </div>
+            <div class="tracks">
+                <div class="row list" v-for="(track, id) in tracks">
+                    <div class="eight columns">
+                        <p class="title">{{ track.name }}</p>
+                        <p class="sub-title"><em>{{ track.slug }}.</em> 3 resources</p>
+                    </div>
+                    <div class=" four columns">
+                        <a href="new-track.html">Manage Track</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </script>
+
+    <script type="text/x-template" id="Track">
+        <div>Edit Track</div>
+    </script>
+
+    <script type="text/x-template" id="QuestionList">
+        <div>List Questions</div>
+    </script>
+
+    <script type="text/x-template" id="Question">
+        <div>Edit Question</div>
+    </script>
+
+
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@2.1.1/dist/vue-router.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>

@@ -12,27 +12,59 @@ var config = {
 
 firebase.initializeApp(config);
 
+// Sample code to create a track on firebase
+
+// var _tracks = firebase.database().ref('tracks');
+// var _newTrack = _tracks.push();
+// _newTrack.set({
+// 	name: 'Sample Track',
+// 	slug: 'sample-track',
+// 	resources: []
+// });
+
+// Components
+
+var TrackList = Vue.component('TrackList', {
+    template: '#TrackList',
+    data: function() {
+        return {
+            tracks: null
+        }
+    },
+    watch: {
+        '$route': 'fetchData'
+    },
+    created: function() {
+        this.fetchData()
+    },
+    methods: {
+        fetchData: function() {
+        	var $this = this;
+            var tracks = [];
+            firebase.database().ref('tracks').on('value', function(snapshot) {
+                $this.tracks = snapshot.val();
+            });
+        }
+    }
+});
+
+var Track = Vue.component('Track', {
+    template: '#Track'
+});
+
+var QuestionList = Vue.component('QuestionList', {
+    template: '#QuestionList'
+});
+
+var Question = Vue.component('Question', {
+    template: '#Question'
+});
 
 // Routes
-var TrackList = {
-    template: '<div>All Tracks</div>'
-}
-
-var Track = {
-    template: '<div>Track {{ $route.params.id }}</div>'
-}
-
-var QuestionList = {
-    template: '<div>All questions</div>'
-}
-
-var Question = {
-    template: '<div>Question {{ $route.params.id }}</div>'
-}
 
 var router = new VueRouter({
     routes: [
-    	 { path: '/', redirect: '/tracks' },
+        { path: '/', redirect: '/tracks' },
         { path: '/tracks', component: TrackList },
         { path: '/tracks/:id', component: Track },
         { path: '/questions', component: QuestionList },
