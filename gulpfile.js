@@ -38,7 +38,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('js',function(){
-  gulp.src('src/js/scripts.js')
+  gulp.src('src/js/*.js')
     .pipe(sourcemaps.init())
     .pipe(jshint.reporter('default'))
     .pipe(header(banner, { package : package }))

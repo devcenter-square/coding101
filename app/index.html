@@ -14,55 +14,29 @@
 </head>
 
 <body>
-    <header class="container">
-        <nav class="header">
-            <div class="row">
-                <div class="six columns">
-                    <a class="nav-logo" href="/">Coding101</a>
-                </div>
-                <div class="six columns">
-                    <div class="nav-link">
-                        <a class="active" href="/">Tracks</a>
-                        <a href="questions.html">Questions</a>
+    <div id="app">
+        <header class="container" id="header">
+            <nav class="header">
+                <div class="row">
+                    <div class="six columns">
+                        <router-link to="/">Coding101</router-link>
+                    </div>
+                    <div class="six columns">
+                        <div class="nav-link">
+                            <router-link to="tracks" active-class="active">Tracks</router-link>
+                            <router-link to="questions" active-class="active">Questions</router-link>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <section class="borderline"></section>
-    <section class="container add-track m-t-xl m-b-xl">
-        <a href="new-track.html"><i class="fa fa-plus"></i>New Track</a>
-    </section>
-    <section class="container tracks">
-        <div class="row list">
-            <div class="eight columns">
-                <p class="title">Coding With HTML / CSS</p>
-                <p class="sub-title"><em>coding-with-html.</em> 3 resources</p>
-            </div>
-            <div class=" four columns">
-                <a href="new-track.html">Manage Track</a>
-            </div>
-        </div>
-        <div class="row list">
-            <div class="eight columns">
-                <p class="title">Back End: Javascript</p>
-                <p class="sub-title"><em>back-end-javascript.</em> 3 resources</p>
-            </div>
-            <div class="four columns">
-                <a href="new-track.html">Manage Track</a>
-            </div>
-        </div>
-        <div class="row list">
-            <div class="eight columns">
-                <p class="title">Front End: Javascript</p>
-                <p class="sub-title"><em>front-end-javascript.</em> 3 resources</p>
-            </div>
-            <div class="four columns">
-                <a href="new-track.html">Manage Track</a>
-            </div>
-        </div>
-    </section>
-    <script src="assets/js/scripts.min.js"></script>
+            </nav>
+        </header>
+        <router-view></router-view>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.1.1/dist/vue-router.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 
 </html>

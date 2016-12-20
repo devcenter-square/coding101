@@ -1,3 +1,7 @@
+// We can use this file for all DOM editing functions,
+// so that we leave the main app functions in app.js
+
+
 $(document).ready(function() {
     $("#add-another-answer").click(function() {
 
