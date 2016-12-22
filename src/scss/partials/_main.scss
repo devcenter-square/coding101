@@ -19,7 +19,11 @@
 
 // new track page
 .new-track {
-    .form {}
+    .form {
+        button {
+            border: none;
+        }
+    }
     .nav {
         p {
             font-weight: bold;

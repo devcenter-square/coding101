@@ -23,7 +23,7 @@
                     </div>
                     <div class="six columns">
                         <div class="nav-link">
-                            <router-link to="tracks" active-class="active">Tracks</router-link>
+                            <router-link to="/" active-class="active">Tracks</router-link>
                             <router-link to="questions" active-class="active">Questions</router-link>
                         </div>
                     </div>
@@ -46,8 +46,8 @@
                         <p class="title">{{ track.name }}</p>
                         <p class="sub-title"><em>{{ track.slug }}.</em> 3 resources</p>
                     </div>
-                    <div class=" four columns">
-                        <a href="new-track.html">Manage Track</a>
+                    <div class="four columns">
+                        <a v-bind:href="track.slug">Manage Track</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,40 @@
     </script>
 
     <script type="text/x-template" id="Track">
-        <div>Edit Track</div>
+        <section class="container new-track m-t-xl">
+            <form class="form" v-on:submit.prevent="trackSubmit">
+                <div class="row nav">
+                    <div class="eight columns">
+                        <p>New Track</p>
+                    </div>
+                    <div class="four columns">
+                        <div class="u-pull-right">
+                            <router-link to="/">Cancel</router-link>
+                            <button class="new-track-active">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-xl">
+                    <div class="four columns">
+                        <label>Track Details</label>
+                    </div>
+                    <div class="eight columns">
+                        <input class="form-control u-full-width" v-model="trackName" placeholder="Track Name" type="text" required>
+                        <textarea class="form-control u-full-width" v-model="trackDetails" placeholder="Track Details(Markdown)" required></textarea>
+                    </div>
+                </div>
+                <div class="row m-t-xl">
+                    <div class="four columns">
+                        <label>Track Resources</label>
+                    </div>
+                    <div class="eight columns">
+                        <input class="form-control u-full-width" v-model="trackResource" placeholder="Link Url" type="text" required>
+                        <input class="form-control u-full-width" v-model="trackResourceTwo" placeholder="Link Url" type="text" required>
+                        <div><a id="add-another-answer" class="another-answer text-grey" href="#"><i class="fa fa-plus"></i>Add another link</a></div>
+                    </div>
+                </div>
+            </form>
+        </section>
     </script>
 
     <script type="text/x-template" id="QuestionList">

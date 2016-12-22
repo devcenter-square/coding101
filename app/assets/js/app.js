@@ -24,6 +24,7 @@ firebase.initializeApp(config);
 
 // var _tracks = firebase.database().ref('tracks');
 // var _newTrack = _tracks.push();
+//
 // _newTrack.set({
 // 	name: 'Sample Track',
 // 	slug: 'sample-track',
@@ -52,12 +53,50 @@ var TrackList = Vue.component('TrackList', {
             firebase.database().ref('tracks').on('value', function(snapshot) {
                 $this.tracks = snapshot.val();
             });
-        }
+        },
+
+
     }
 });
 
 var Track = Vue.component('Track', {
-    template: '#Track'
+    template: '#Track',
+    data: function() {
+        return {
+            trackName: '',
+            trackSlug: '',
+            trackResource: '',
+            trackResourceTwo: '',
+            trackDetails: '',
+        }
+    },
+    methods: {
+        trackSubmit: function () {
+            var _tracks = firebase.database().ref('tracks');
+            var _newTrack = _tracks.push();
+
+            var trackSlug = this.trackName.replace(/\s+/g, '-').toLowerCase();
+
+            _newTrack.set({
+            	name: this.trackName,
+                slug: trackSlug,
+            	details: this.trackDetails,
+            	resources: [
+                    {
+                        link: this.trackResource
+
+                    },
+                    {
+                        linktwo: this.trackResourceTwo
+                    }
+            ]
+            });
+
+            this.$router.push('/')
+
+
+        }
+    }
 });
 
 var QuestionList = Vue.component('QuestionList', {

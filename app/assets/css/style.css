@@ -991,6 +991,9 @@ textarea {
     float: right;
     font-weight: bold; }
 
+.new-track .form button {
+  border: none; }
+
 .new-track .nav p {
   font-weight: bold; }
 
