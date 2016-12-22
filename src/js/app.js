@@ -17,20 +17,9 @@ var db = {
     resources: firebase.database().ref('resources')
 }
 
-// Sample code to create a track on firebase
-
-// var _tracks = db.tracks;
-// var _newTrack = _tracks.push();
-//
-// _newTrack.set({
-//  name: 'Sample Track',
-//  slug: 'sample-track',
-//  resources: []
-// });
-
 // Components
 
-var TrackList = Vue.component('TrackList', {
+var trackList = Vue.component('trackList', {
     template: '#TrackList',
     data: function() {
         return {
@@ -46,7 +35,7 @@ var TrackList = Vue.component('TrackList', {
     methods: {
         fetchData: function() {
             var self = this;
-            db.tracks.on('value', function(snapshot) {
+            db.tracks.once('value', function(snapshot) {
                 var tracks = snapshot.val();
 
                 for (var i in tracks) {
@@ -63,8 +52,8 @@ var TrackList = Vue.component('TrackList', {
     }
 });
 
-var NewTrack = Vue.component('NewTrack', {
-    template: '#NewTrack',
+var newTrack = Vue.component('newTrack', {
+    template: '#Track',
     data: function() {
         return {
             track: {},
@@ -72,15 +61,13 @@ var NewTrack = Vue.component('NewTrack', {
         }
     },
     methods: {
-        addResource: function(event) {
-            event.preventDefault();
+        addResource: function() {
             this.resources.push({});
         },
-        removeResource: function(index, event) {
-            event.preventDefault();
+        removeResource: function(index) {
             this.resources.splice(index, 1);
         },
-        create: function() {
+        save: function() {
             function slugify(text) {
                 return text.toString().toLowerCase()
                     .replace(/\s+/g, '-') // Replace spaces with -
@@ -89,10 +76,10 @@ var NewTrack = Vue.component('NewTrack', {
                     .replace(/^-+/, '') // Trim - from start of text
                     .replace(/-+$/, ''); // Trim - from end of text
             }
+
             this.track.slug = slugify(this.track.name);
 
-            var _newTrack = db.tracks.push();
-            _newTrack.set({
+            db.tracks.child(this.track.slug).set({
                 name: this.track.name,
                 slug: this.track.slug,
                 details: this.track.details
@@ -111,15 +98,56 @@ var NewTrack = Vue.component('NewTrack', {
     }
 });
 
-var ViewTrack = Vue.component('ViewTrack', {
-    template: '#ViewTrack'
+var editTrack = Vue.component('editTrack', {
+    template: '#Track',
+    data: function() {
+        return {
+            track: {},
+            resources: [{}]
+        }
+    },
+    watch: {
+        '$route': 'fetchData'
+    },
+    created: function() {
+        this.fetchData()
+    },
+    methods: {
+        fetchData: function() {
+            var self = this;
+            db.tracks.child(this.$route.params.slug).once('value', function(snapshot) {
+                self.track = snapshot.val();
+            })
+            db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(snapshot) {
+                self.resources = snapshot.val();
+            });
+        },
+        addResource: function() {
+            this.resources.push({});
+
+            // write code to create resource on firebase
+        },
+        removeResource: function(index) {
+            this.resources.splice(index, 1);
+
+            // write code to remove resource from firebase
+        },
+        saveResource: function() {
+            // write code to save resource
+        },
+        save: function() {
+            // write code to update track
+
+            this.$router.push('/');
+        }
+    }
 });
 
-var QuestionList = Vue.component('QuestionList', {
+var questionList = Vue.component('questionList', {
     template: '#QuestionList'
 });
 
-var Question = Vue.component('Question', {
+var question = Vue.component('question', {
     template: '#Question'
 });
 
@@ -127,12 +155,12 @@ var Question = Vue.component('Question', {
 
 var router = new VueRouter({
     routes: [
-        { path: '/', redirect: '/tracks' },
-        { path: '/tracks', component: TrackList },
-        { path: '/tracks/new', component: NewTrack },
-        { path: '/tracks/:slug', component: ViewTrack },
-        { path: '/questions', component: QuestionList },
-        { path: '/questions/:id', component: Question }
+        { name: 'home', path: '/', redirect: '/tracks' },
+        { name: 'trackList', path: '/tracks', component: trackList },
+        { name: 'newTrack', path: '/tracks/new', component: newTrack },
+        { name: 'editTrack', path: '/tracks/:slug', component: editTrack },
+        { name: 'questionList', path: '/questions', component: questionList },
+        { name: 'question', path: '/questions/:id', component: question }
     ]
 });
 

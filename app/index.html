@@ -47,19 +47,20 @@
                         <p class="sub-title"><em>{{ track.slug }}.</em> {{ Object.keys(track.resources).length }} resources</p>
                     </div>
                     <div class="four columns">
-                        <a v-bind:href="track.slug">Manage Track</a>
+                        <router-link v-bind:to="{ name: 'editTrack', params: { slug: track.slug }}">Manage track</router-link>
                     </div>
                 </div>
             </div>
         </section>
     </script>
 
-    <script type="text/x-template" id="NewTrack">
+    <script type="text/x-template" id="Track">
         <section class="container new-track m-t-xl">
-            <form class="form" v-on:submit.prevent="create">
+            <form class="form" v-on:submit.prevent="save">
                 <div class="row nav">
                     <div class="eight columns">
-                        <p>New Track</p>
+                        <p v-if="$route.params.slug">Edit Track</p>
+                        <p v-else>New Track</p>
                     </div>
                     <div class="four columns">
                         <div class="u-pull-right">
@@ -83,22 +84,21 @@
                     </div>
                     <div class="eight columns">
                         <div class="row" v-for="(resource, index) in resources">
-                            <div class="ten columns">
+                            <div class="ten columns" v-if="$route.params.slug">
+                                <input class="form-control u-full-width" v-on:keyup="saveResource" v-model="resource.url" placeholder="Resource Url" type="text" required>
+                            </div>
+                            <div class="ten columns" v-else>
                                 <input class="form-control u-full-width" v-model="resource.url" placeholder="Resource Url" type="text" required>
                             </div>
                             <div class="two columns">
-                                <a class="text-grey" href="#" style="line-height: 35px" v-on:click="removeResource(index, $event)">Remove</a>
+                                <a class="text-grey" href="#" style="line-height: 35px" v-on:click.prevent="removeResource(index)">Remove</a>
                             </div>
                         </div>
-                        <div><a class="another-answer text-grey" href="#" v-on:click="addResource"><i class="fa fa-plus"></i>Add a resouce</a></div>
+                        <div><a class="another-answer text-grey" href="#" v-on:click.prevent="addResource"><i class="fa fa-plus"></i>Add a resouce</a></div>
                     </div>
                 </div>
             </form>
         </section>
-    </script>
-
-    <script type="text/x-template" id="ViewTrack">
-        <div>View Track</div>
     </script>
 
     <script type="text/x-template" id="QuestionList">
