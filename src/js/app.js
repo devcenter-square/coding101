@@ -18,9 +18,9 @@ firebase.initializeApp(config);
 // var _newTrack = _tracks.push();
 //
 // _newTrack.set({
-// 	name: 'Sample Track',
-// 	slug: 'sample-track',
-// 	resources: []
+//  name: 'Sample Track',
+//  slug: 'sample-track',
+//  resources: []
 // });
 
 // Components
@@ -40,7 +40,7 @@ var TrackList = Vue.component('TrackList', {
     },
     methods: {
         fetchData: function() {
-        	var $this = this;
+            var $this = this;
             var tracks = [];
             firebase.database().ref('tracks').on('value', function(snapshot) {
                 $this.tracks = snapshot.val();
@@ -51,44 +51,56 @@ var TrackList = Vue.component('TrackList', {
     }
 });
 
-var Track = Vue.component('Track', {
-    template: '#Track',
+var NewTrack = Vue.component('NewTrack', {
+    template: '#NewTrack',
     data: function() {
         return {
-            trackName: '',
-            trackSlug: '',
-            trackResource: '',
-            trackResourceTwo: '',
-            trackDetails: '',
+            track: {},
+            resources: [{}]
         }
     },
     methods: {
-        trackSubmit: function () {
-            var _tracks = firebase.database().ref('tracks');
-            var _newTrack = _tracks.push();
+        addResource: function(event) {
+            event.preventDefault();
+            this.resources.push({});
+        },
+        removeResource: function(index, event) {
+            event.preventDefault();
+            this.resources.splice(index, 1);
+        },
+        create: function() {
+            function slugify(text) {
+                return text.toString().toLowerCase()
+                    .replace(/\s+/g, '-') // Replace spaces with -
+                    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                    .replace(/^-+/, '') // Trim - from start of text
+                    .replace(/-+$/, ''); // Trim - from end of text
+            }
+            this.track.slug = slugify(this.track.name);
 
-            var trackSlug = this.trackName.replace(/\s+/g, '-').toLowerCase();
-
+            var _newTrack = firebase.database().ref('tracks').push();
             _newTrack.set({
-            	name: this.trackName,
-                slug: trackSlug,
-            	details: this.trackDetails,
-            	resources: [
-                    {
-                        link: this.trackResource
-
-                    },
-                    {
-                        linktwo: this.trackResourceTwo
-                    }
-            ]
+                name: this.track.name,
+                slug: this.track.slug,
+                details: this.track.details
             });
 
-            this.$router.push('/')
+            for (i=0; i < this.resources.length; i++) {
+                var _newResource = firebase.database().ref('resources').push();
+                _newResource.set({
+                    track: this.track.slug,
+                    url: this.resources[i].url
+                })
+            }
 
-
+            this.$router.push('/');
         }
     }
+});
+
+var ViewTrack = Vue.component('ViewTrack', {
+    template: '#ViewTrack'
 });
 
 var QuestionList = Vue.component('QuestionList', {
@@ -105,7 +117,8 @@ var router = new VueRouter({
     routes: [
         { path: '/', redirect: '/tracks' },
         { path: '/tracks', component: TrackList },
-        { path: '/tracks/:id', component: Track },
+        { path: '/tracks/new', component: NewTrack },
+        { path: '/tracks/:slug', component: ViewTrack },
         { path: '/questions', component: QuestionList },
         { path: '/questions/:id', component: Question }
     ]
