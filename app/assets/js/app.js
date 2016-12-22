@@ -20,9 +20,14 @@ var config = {
 
 firebase.initializeApp(config);
 
+var db = {
+    tracks: firebase.database().ref('tracks'),
+    resources: firebase.database().ref('resources')
+}
+
 // Sample code to create a track on firebase
 
-// var _tracks = firebase.database().ref('tracks');
+// var _tracks = db.tracks;
 // var _newTrack = _tracks.push();
 //
 // _newTrack.set({
@@ -37,7 +42,7 @@ var TrackList = Vue.component('TrackList', {
     template: '#TrackList',
     data: function() {
         return {
-            tracks: null
+            tracks: []
         }
     },
     watch: {
@@ -48,14 +53,21 @@ var TrackList = Vue.component('TrackList', {
     },
     methods: {
         fetchData: function() {
-            var $this = this;
-            var tracks = [];
-            firebase.database().ref('tracks').on('value', function(snapshot) {
-                $this.tracks = snapshot.val();
+            var self = this;
+            db.tracks.on('value', function(snapshot) {
+                var tracks = snapshot.val();
+
+                for (var i in tracks) {
+                    var track = tracks[i];
+                    track.resources = {};
+                    db.resources.orderByChild('track').equalTo(track.slug).once('value', function(resources) {
+                        track.resources = resources.val();
+                    });
+
+                    self.tracks.push(track);
+                }
             });
-        },
-
-
+        }
     }
 });
 
@@ -87,14 +99,14 @@ var NewTrack = Vue.component('NewTrack', {
             }
             this.track.slug = slugify(this.track.name);
 
-            var _newTrack = firebase.database().ref('tracks').push();
+            var _newTrack = db.tracks.push();
             _newTrack.set({
                 name: this.track.name,
                 slug: this.track.slug,
                 details: this.track.details
             });
 
-            for (i=0; i < this.resources.length; i++) {
+            for (i = 0; i < this.resources.length; i++) {
                 var _newResource = firebase.database().ref('resources').push();
                 _newResource.set({
                     track: this.track.slug,

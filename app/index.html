@@ -44,7 +44,7 @@
                 <div class="row list" v-for="(track, id) in tracks">
                     <div class="eight columns">
                         <p class="title">{{ track.name }}</p>
-                        <p class="sub-title"><em>{{ track.slug }}.</em> 3 resources</p>
+                        <p class="sub-title"><em>{{ track.slug }}.</em> {{ Object.keys(track.resources).length }} resources</p>
                     </div>
                     <div class="four columns">
                         <a v-bind:href="track.slug">Manage Track</a>
