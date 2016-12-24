@@ -134,11 +134,39 @@ var editTrack = Vue.component('editTrack', {
         },
         saveResource: function() {
             // write code to save resource
+            // for (i = 0; i < this.resources.length; i++) {
+            //     var _newResource = firebase.database().ref('resources').child(index);
+            //     _newResource.update({
+            //         track: this.track.slug,
+            //         url: this.resources[i].url
+            //     })
+            //
+            // }
+
         },
         save: function() {
             // write code to update track
+            function slugify(text) {
+                return text.toString().toLowerCase()
+                    .replace(/\s+/g, '-') // Replace spaces with -
+                    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+                    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                    .replace(/^-+/, '') // Trim - from start of text
+                    .replace(/-+$/, ''); // Trim - from end of text
+            }
 
-            this.$router.push('/');
+            this.track.slug = slugify(this.track.name);
+
+            db.tracks.child(this.$route.params.slug).update({
+                name: this.track.name,
+                slug: this.track.slug,
+                details: this.track.details
+            });
+
+
+            console.log(this.track.slug);
+
+            // this.$router.push('/');
         }
     }
 });
