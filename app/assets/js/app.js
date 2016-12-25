@@ -95,9 +95,12 @@ var newTrack = Vue.component('newTrack', {
 
             for (i = 0; i < this.resources.length; i++) {
                 var _newResource = firebase.database().ref('resources').push();
+                var _key = _newResource.key;
+                var id;
                 _newResource.set({
                     track: this.track.slug,
-                    url: this.resources[i].url
+                    url: this.resources[i].url,
+                    id: _key
                 })
             }
 
@@ -142,22 +145,7 @@ var editTrack = Vue.component('editTrack', {
         },
         saveResource: function() {
             // write code to save resource
-            // for (i = 0; i < this.resources.length; i++) {
-            //     var _newResource = firebase.database().ref('resources').child(index);
-            //     _newResource.update({
-            //         track: this.track.slug,
-            //         url: this.resources[i].url
-            //     })
-            //
-            // }
-            // var _newResource = firebase.database().ref('resources').child("track").equalTo(this.$route.params.slug);
-            db.resources.orderByValue(index).update({
-                track: this.track.slug,
-                url: this.resources.url
-            });
-
-            // console.log(this.$route.params.slug);
-
+            
         },
         save: function() {
             // write code to update track
@@ -178,10 +166,7 @@ var editTrack = Vue.component('editTrack', {
                 details: this.track.details
             });
 
-
-            console.log(this.track.slug);
-
-            // this.$router.push('/');
+             this.$router.push('/');
         }
     }
 });
