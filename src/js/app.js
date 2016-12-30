@@ -127,17 +127,28 @@ var editTrack = Vue.component('editTrack', {
         },
         addResource: function() {
             this.resources.push({});
-
             // write code to create resource on firebase
         },
         removeResource: function(index) {
-            this.resources.splice(index, 1);
+
+            // var _objects = this.resources
+            // for (i in _objects) {
+            //     var _updateResource = firebase.database().ref('resources/' + _objects[i].id)
+            //     _updateResource.remove();
+            //     _objects.splice(index, 1);
+            // }
 
             // write code to remove resource from firebase
         },
         saveResource: function() {
             // write code to save resource
-            
+            var _objects = this.resources
+            for (i in _objects) {
+                var _updateResource = firebase.database().ref('resources/' + _objects[i].id)
+                _updateResource.update({
+                    url: _objects[i].url
+                });
+            }
         },
         save: function() {
             // write code to update track
