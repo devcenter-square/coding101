@@ -47,12 +47,14 @@ var trackList = {
                 var tracks = snapshot.val();
 
                 for (var i in tracks) {
-                    var track = tracks[i];
-                    track.resources = {};
-                    db.resources.orderByChild('track').equalTo(track.slug).once('value', function(resources) {
-                        track.resources = resources.val() || {};
-                    });
-                    self.tracks.push(track);
+                    fetchResources(tracks[i]);
+                }
+
+                function fetchResources(track) {
+                    db.resources.orderByChild('track').equalTo(track.slug).once('value', function(snapshot) {
+                        track.resources = snapshot.val() || {};
+                        self.tracks.push(track);
+                    })
                 }
             });
         }
