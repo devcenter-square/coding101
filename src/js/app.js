@@ -19,7 +19,7 @@ var db = {
 
 // Components
 
-var trackList = Vue.component('trackList', {
+var trackList = {
     template: '#TrackList',
     data: function() {
         return {
@@ -50,9 +50,9 @@ var trackList = Vue.component('trackList', {
             });
         }
     }
-});
+};
 
-var newTrack = Vue.component('newTrack', {
+var newTrack = {
     template: '#Track',
     data: function() {
         return {
@@ -68,15 +68,6 @@ var newTrack = Vue.component('newTrack', {
             this.resources.splice(index, 1);
         },
         save: function() {
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    .replace(/\s+/g, '-') // Replace spaces with -
-                    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-                    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-                    .replace(/^-+/, '') // Trim - from start of text
-                    .replace(/-+$/, ''); // Trim - from end of text
-            }
-
             this.track.slug = slugify(this.track.name);
 
             db.tracks.child(this.track.slug).set({
@@ -86,51 +77,66 @@ var newTrack = Vue.component('newTrack', {
             });
 
             for (i = 0; i < this.resources.length; i++) {
-                var _newResource = firebase.database().ref('resources').push();
-                var _key = _newResource.key;
-                var id;
+                var _newResource = db.resources.push();
                 _newResource.set({
                     track: this.track.slug,
-                    url: this.resources[i].url,
-                    id: _key
-                })
+                    url: this.resources[i].url
+                });
             }
 
             this.$router.push('/');
         }
     }
-});
+};
 
-var editTrack = Vue.component('editTrack', {
+var editTrack = {
     template: '#Track',
     data: function() {
         return {
             track: {},
-            resources: [{}]
+            resources: {}
         }
+    },
+    beforeRouteEnter: function(to, from, next) {
+        db.tracks.child(to.params.slug).once('value', function(track) {
+            db.resources.orderByChild("track").equalTo(to.params.slug).once('value', function(resources) {
+                next(function(vm) {
+                    vm.track = track.val();
+                    vm.resources = resources.val();
+                });
+            });
+        }, function() {
+            // Track doesn't exist
+            next(false);
+        })
     },
     watch: {
         '$route': 'fetchData'
     },
-    created: function() {
-        this.fetchData()
-    },
     methods: {
-        fetchData: function() {
+        fetchData: function(slug) {
             var self = this;
-            db.tracks.child(this.$route.params.slug).once('value', function(snapshot) {
-                self.track = snapshot.val();
-            })
-            db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(snapshot) {
-                self.resources = snapshot.val();
+            db.tracks.child(slug).once('value', function(track) {
+                db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(resources) {
+                    self.track = track.val();
+                    self.resources = resources.val();
+                });
+            }, function() {
+                // Track doesn't exist
             });
         },
         addResource: function() {
-            this.resources.push({});
-            // write code to create resource on firebase
+            var self = this;
+            var _newResource = {
+                track: this.track.slug
+            };
+
+            db.resources.push(_newResource).then(function(snapshot) {
+                self.resources = self.resources || {};
+                Vue.set(self.resources, snapshot.key, _newResource);
+            });
         },
         removeResource: function(index) {
-
             // var _objects = this.resources
             // for (i in _objects) {
             //     var _updateResource = firebase.database().ref('resources/' + _objects[i].id)
@@ -140,27 +146,14 @@ var editTrack = Vue.component('editTrack', {
 
             // write code to remove resource from firebase
         },
-        saveResource: function() {
+        saveResource: function(index, resource) {
             // write code to save resource
-            var _objects = this.resources
-            for (i in _objects) {
-                var _updateResource = firebase.database().ref('resources/' + _objects[i].id)
-                _updateResource.update({
-                    url: _objects[i].url
-                });
-            }
+            db.resources.child(index).update({
+                url: resource.url
+            });
         },
         save: function() {
             // write code to update track
-            function slugify(text) {
-                return text.toString().toLowerCase()
-                    .replace(/\s+/g, '-') // Replace spaces with -
-                    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-                    .replace(/\-\-+/g, '-') // Replace multiple - with single -
-                    .replace(/^-+/, '') // Trim - from start of text
-                    .replace(/-+$/, ''); // Trim - from end of text
-            }
-
             this.track.slug = slugify(this.track.name);
 
             db.tracks.child(this.$route.params.slug).update({
@@ -169,10 +162,10 @@ var editTrack = Vue.component('editTrack', {
                 details: this.track.details
             });
 
-             this.$router.push('/');
+            this.$router.push('/');
         }
     }
-});
+};
 
 var questionList = Vue.component('questionList', {
     template: '#QuestionList'
@@ -198,3 +191,15 @@ var router = new VueRouter({
 // Initialize Vue
 
 var app = new Vue({ router: router }).$mount('#app');
+
+
+// Utility functions
+
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+        .replace(/\-\-+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
+}

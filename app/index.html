@@ -85,7 +85,7 @@
                     <div class="eight columns">
                         <div class="row" v-for="(resource, index) in resources">
                             <div class="ten columns" v-if="$route.params.slug">
-                                <input class="form-control u-full-width" v-on:keyup="saveResource" v-model="resource.url" placeholder="Resource Url" type="text" required>
+                                <input class="form-control u-full-width" v-on:keyup="saveResource(index, resource)" v-model="resource.url" placeholder="Resource Url" type="text" required>
                             </div>
                             <div class="ten columns" v-else>
                                 <input class="form-control u-full-width" v-model="resource.url" placeholder="Resource Url" type="text" required>
@@ -111,7 +111,7 @@
     </script>
 
 
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@2.1.1/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@2.1.1/dist/vue-router.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
