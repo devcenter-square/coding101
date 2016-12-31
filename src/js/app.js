@@ -42,9 +42,8 @@ var trackList = {
                     var track = tracks[i];
                     track.resources = {};
                     db.resources.orderByChild('track').equalTo(track.slug).once('value', function(resources) {
-                        track.resources = resources.val();
+                        track.resources = resources.val() || {};
                     });
-
                     self.tracks.push(track);
                 }
             });
@@ -99,30 +98,33 @@ var editTrack = {
     },
     beforeRouteEnter: function(to, from, next) {
         db.tracks.child(to.params.slug).once('value', function(track) {
-            db.resources.orderByChild("track").equalTo(to.params.slug).once('value', function(resources) {
-                next(function(vm) {
-                    vm.track = track.val();
-                    vm.resources = resources.val();
+            if (track.val() == null) {
+                next(false);
+            } else {
+                db.resources.orderByChild("track").equalTo(to.params.slug).once('value', function(resources) {
+                    next(function(vm) {
+                        vm.track = track.val();
+                        vm.resources = resources.val();
+                    });
                 });
-            });
-        }, function() {
-            // Track doesn't exist
-            next(false);
+            }
         })
     },
     watch: {
         '$route': 'fetchData'
     },
     methods: {
-        fetchData: function(slug) {
+        fetchData: function() {
             var self = this;
-            db.tracks.child(slug).once('value', function(track) {
-                db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(resources) {
-                    self.track = track.val();
-                    self.resources = resources.val();
-                });
-            }, function() {
-                // Track doesn't exist
+            db.tracks.child(this.$route.params.slug).once('value', function(track) {
+                if (track.val() == null) {
+                    router.push('/404');
+                } else {
+                    db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(resources) {
+                        self.track = track.val();
+                        self.resources = resources.val();
+                    });
+                }
             });
         },
         addResource: function() {
@@ -137,23 +139,17 @@ var editTrack = {
             });
         },
         removeResource: function(index) {
-            // var _objects = this.resources
-            // for (i in _objects) {
-            //     var _updateResource = firebase.database().ref('resources/' + _objects[i].id)
-            //     _updateResource.remove();
-            //     _objects.splice(index, 1);
-            // }
-
-            // write code to remove resource from firebase
+            var self = this;
+            db.resources.child(index).remove().then(function() {
+                Vue.delete(self.resources, index);
+            });
         },
         saveResource: function(index, resource) {
-            // write code to save resource
             db.resources.child(index).update({
                 url: resource.url
             });
         },
         save: function() {
-            // write code to update track
             this.track.slug = slugify(this.track.name);
 
             db.tracks.child(this.$route.params.slug).update({
@@ -167,13 +163,17 @@ var editTrack = {
     }
 };
 
-var questionList = Vue.component('questionList', {
+var questionList = {
     template: '#QuestionList'
-});
+};
 
-var question = Vue.component('question', {
+var question = {
     template: '#Question'
-});
+};
+
+var notFound = {
+    template: '#NotFound'
+};
 
 // Routes
 
@@ -184,7 +184,8 @@ var router = new VueRouter({
         { name: 'newTrack', path: '/tracks/new', component: newTrack },
         { name: 'editTrack', path: '/tracks/:slug', component: editTrack },
         { name: 'questionList', path: '/questions', component: questionList },
-        { name: 'question', path: '/questions/:id', component: question }
+        { name: 'question', path: '/questions/:id', component: question },
+        { name: '404', path: '/404', component: notFound }
     ]
 });
 
