@@ -11,6 +11,7 @@
     <link href="assets/css/style.min.css" rel="stylesheet">
     <link href="assets/components/selectize/selectize.css" rel="stylesheet">
     <link href="assets/components/selectize/selectize.default.css" rel="stylesheet">
+    <link href="assets/components/loading-bar/loading-bar.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/ab67cbccfa.js"></script>
     <script src="assets/components/modernizr/modernizr.js"></script>
     <script src="assets/components/jquery/jquery.min.js"></script>
@@ -77,7 +78,7 @@
                     </div>
                     <div class="eight columns">
                         <input class="form-control u-full-width" v-model="track.name" placeholder="Track Name" type="text" required>
-                        <textarea class="form-control u-full-width" v-model="track.details" placeholder="Track Details (Markdown)" rows="6" style="height: auto" required></textarea>
+                        <textarea class="form-control u-full-width" v-model="track.details" placeholder="Track Details" rows="6" style="height: auto" required></textarea>
                     </div>
                 </div>
                 <div class="row m-t-xl">
@@ -130,7 +131,7 @@
                     </div>
                     <div class="four columns">
                         <div class="u-pull-right">
-                            <router-link to="/">Cancel</router-link>
+                            <router-link to="/questions">Cancel</router-link>
                             <button class="new-track-active">Save</button>
                         </div>
                     </div>
@@ -164,6 +165,7 @@
     </script>
     <script src="https://unpkg.com/vue@2.1.1/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@2.1.1/dist/vue-router.js"></script>
+    <script src="assets/components/loading-bar/vue2-loading-bar.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-database.js"></script>
     <script src="assets/js/app.js"></script>
