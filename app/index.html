@@ -9,8 +9,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="assets/components/skeleton/skeleton.css" rel="stylesheet">
     <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/components/selectize/selectize.css" rel="stylesheet">
+    <link href="assets/components/selectize/selectize.default.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/ab67cbccfa.js"></script>
     <script src="assets/components/modernizr/modernizr.js"></script>
+    <script src="assets/components/jquery/jquery.min.js"></script>
+    <script src="assets/components/selectize/selectize.min.js"></script>
 </head>
 
 <body>
@@ -23,8 +27,8 @@
                     </div>
                     <div class="six columns">
                         <div class="nav-link">
-                            <router-link to="tracks" active-class="active">Tracks</router-link>
-                            <router-link to="questions" active-class="active">Questions</router-link>
+                            <router-link to="/tracks" active-class="active">Tracks</router-link>
+                            <router-link to="/questions" active-class="active">Questions</router-link>
                         </div>
                     </div>
                 </div>
@@ -33,7 +37,6 @@
         <section class="borderline"></section>
         <router-view></router-view>
     </div>
-
     <!-- Templates -->
     <script type="text/x-template" id="TrackList">
         <section class="container">
@@ -44,7 +47,7 @@
                 <div class="row list" v-for="(track, id) in tracks">
                     <div class="eight columns">
                         <p class="title">{{ track.name }}</p>
-                        <p class="sub-title"><em>{{ track.slug }}.</em> {{ Object.keys(track.resources).length }} resources</p>
+                        <p class="sub-title">{{ Object.keys(track.resources).length }} resources</p>
                     </div>
                     <div class="four columns">
                         <router-link v-bind:to="{ name: 'editTrack', params: { slug: track.slug }}">Manage track</router-link>
@@ -53,7 +56,6 @@
             </div>
         </section>
     </script>
-
     <script type="text/x-template" id="Track">
         <section class="container new-track m-t-xl">
             <form class="form" v-on:submit.prevent="save">
@@ -90,7 +92,6 @@
                             <div class="ten columns" v-else>
                                 <input class="form-control u-full-width" v-model="resource.url" placeholder="Resource Url" type="text" required>
                             </div>
-                            
                             <div class="two columns">
                                 <a class="text-grey" href="#" style="line-height: 35px" v-on:click.prevent="removeResource(index)">Remove</a>
                             </div>
@@ -101,19 +102,66 @@
             </form>
         </section>
     </script>
-
     <script type="text/x-template" id="QuestionList">
-        <div>List Questions</div>
+        <section class="container">
+            <div class="add-track m-t-xl m-b-xl">
+                <router-link to="/questions/new"><i class="fa fa-plus"></i> New Question</router-link>
+            </div>
+            <div class="tracks">
+                <div class="row list" v-for="(question, id) in questions">
+                    <div class="eight columns">
+                        <p class="title">{{ question.description }}</p>
+                        <p class="sub-title">{{ Object.keys(question.answers).length }} answers</p>
+                    </div>
+                    <div class="four columns">
+                        <router-link v-bind:to="{ name: 'editQuestion', params: { slug: question.slug }}">Manage question</router-link>
+                    </div>
+                </div>
+            </div>
+        </section>
     </script>
-
     <script type="text/x-template" id="Question">
-        <div>Edit Question</div>
+        <section class="container new-track m-t-xl">
+            <form class="form" v-on:submit.prevent="save">
+                <div class="row nav">
+                    <div class="eight columns">
+                        <p v-if="$route.params.slug">Edit Question</p>
+                        <p v-else>New Question</p>
+                    </div>
+                    <div class="four columns">
+                        <div class="u-pull-right">
+                            <router-link to="/">Cancel</router-link>
+                            <button class="new-track-active">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-t-xl">
+                    <div class="four columns">
+                        <label>Description</label>
+                    </div>
+                    <div class="eight columns">
+                        <input class="form-control u-full-width" v-model="question.description" placeholder="Question Description" type="text" required>
+                    </div>
+                </div>
+                <div class="row m-t-xl" v-for="(answer, index) in answers">
+                    <div class="four columns">
+                        <label>Answer</label>
+                        <div>
+                            <a class="text-grey" href="#" style="line-height: 35px" v-on:click.prevent="removeAnswer(index)">Remove</a>
+                        </div>
+                    </div>
+                    <div class="eight columns">
+                        <input class="form-control u-full-width" v-model="answer.description" placeholder="Description" type="text" required>
+                        <selectize-vue v-model="answer.tracks"></selectize-vue>
+                    </div>
+                </div>
+                <div><a class="another-answer text-grey" href="#" v-on:click.prevent="addAnswer"><i class="fa fa-plus"></i>Add an answer</a></div>
+            </form>
+        </section>
     </script>
-
     <script type="text/x-template" id="NotFound">
         <div style="padding: 50px; text-align: center;">404. Not found</div>
     </script>
-
     <script src="https://unpkg.com/vue@2.1.1/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@2.1.1/dist/vue-router.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase-app.js"></script>

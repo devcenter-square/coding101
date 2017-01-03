@@ -14,7 +14,9 @@ firebase.initializeApp(config);
 
 var db = {
     tracks: firebase.database().ref('tracks'),
-    resources: firebase.database().ref('resources')
+    resources: firebase.database().ref('resources'),
+    questions: firebase.database().ref('questions'),
+    answers: firebase.database().ref('answers')
 }
 
 // Components
@@ -24,7 +26,7 @@ var trackList = {
     data: function() {
         return {
             tracks: []
-        }
+        };
     },
     watch: {
         '$route': 'fetchData'
@@ -69,7 +71,7 @@ var newTrack = {
             this.resources.splice(index, 1);
         },
         save: function() {
-            this.track.slug = slugify(this.track.name);
+            this.track.slug = generateUUID();
 
             db.tracks.child(this.track.slug).set({
                 name: this.track.name,
@@ -100,13 +102,13 @@ var editTrack = {
     },
     beforeRouteEnter: function(to, from, next) {
         db.tracks.child(to.params.slug).once('value', function(track) {
-            if (track.val() == null) {
+            if (track.val() === null) {
                 next(false);
             } else {
                 db.resources.orderByChild("track").equalTo(to.params.slug).once('value', function(resources) {
-                    next(function(vm) {
-                        vm.track = track.val();
-                        vm.resources = resources.val();
+                    next(function(self) {
+                        self.track = track.val();
+                        self.resources = resources.val();
                     });
                 });
             }
@@ -119,7 +121,7 @@ var editTrack = {
         fetchData: function() {
             var self = this;
             db.tracks.child(this.$route.params.slug).once('value', function(track) {
-                if (track.val() == null) {
+                if (track.val() === null) {
                     router.push('/404');
                 } else {
                     db.resources.orderByChild("track").equalTo(this.$route.params.slug).once('value', function(resources) {
@@ -152,11 +154,8 @@ var editTrack = {
             });
         },
         save: function() {
-            this.track.slug = slugify(this.track.name);
-
             db.tracks.child(this.$route.params.slug).update({
                 name: this.track.name,
-                slug: this.track.slug,
                 details: this.track.details
             });
 
@@ -166,12 +165,176 @@ var editTrack = {
 };
 
 var questionList = {
-    template: '#QuestionList'
+    template: '#QuestionList',
+    data: function() {
+        return {
+            questions: []
+        }
+    },
+    watch: {
+        '$route': 'fetchData'
+    },
+    created: function() {
+        this.fetchData()
+    },
+    methods: {
+        fetchData: function() {
+            var self = this;
+            db.questions.once('value', function(snapshot) {
+                var questions = snapshot.val();
+
+                for (var i in questions) {
+                    fetchAnswers(questions[i]);
+                }
+
+                function fetchAnswers(question) {
+                    db.answers.orderByChild('question').equalTo(question.slug).once('value', function(snapshot) {
+                        question.answers = snapshot.val() || {};
+                        self.questions.push(question);
+                    })
+                }
+            });
+        }
+    }
 };
 
-var question = {
-    template: '#Question'
+var newQuestion = {
+    template: '#Question',
+    data: function() {
+        return {
+            question: {},
+            answers: [{}]
+        }
+    },
+    methods: {
+        addAnswer: function() {
+            this.answers.push({});
+        },
+        removeAnswer: function(index) {
+            this.answers.splice(index, 1);
+        },
+        save: function() {
+            this.question.slug = generateUUID();
+
+            db.questions.child(this.question.slug).set({
+                description: this.question.description,
+                slug: this.question.slug
+            });
+
+            for (i = 0; i < this.answers.length; i++) {
+                var _newAnswer = db.answers.push();
+                _newAnswer.set({
+                    question: this.question.slug,
+                    description: this.answers[i].description,
+                    tracks: this.answers[i].tracks
+                });
+            }
+
+            this.$router.push('/questions');
+        }
+    }
 };
+
+var editQuestion = {
+    template: '#Question',
+    data: function() {
+        return {
+            question: {},
+            answers: {}
+        }
+    },
+    beforeRouteEnter: function(to, from, next) {
+        db.questions.child(to.params.slug).once('value', function(question) {
+            if (question.val() === null) {
+                next(false);
+            } else {
+                db.answers.orderByChild("question").equalTo(to.params.slug).once('value', function(answers) {
+                    next(function(self) {
+                        self.question = question.val();
+                        self.answers = answers.val();
+                    });
+                });
+            }
+        })
+    },
+    watch: {
+        '$route': 'fetchData'
+    },
+    methods: {
+        fetchData: function() {
+            var self = this;
+            db.questions.child(this.$route.params.slug).once('value', function(question) {
+                if (question.val() === null) {
+                    router.push('/404');
+                } else {
+                    db.answers.orderByChild("question").equalTo(this.$route.params.slug).once('value', function(answers) {
+                        self.question = question.val();
+                        self.answers = answers.val();
+                    });
+                }
+            });
+        },
+        addAnswer: function() {
+            var self = this;
+            var _newAnswer = {
+                question: this.question.slug
+            };
+
+            db.answers.push(_newAnswer).then(function(snapshot) {
+                self.answers = self.answers || {};
+                Vue.set(self.answers, snapshot.key, _newAnswer);
+            });
+        },
+        removeAnswer: function(index) {
+            var self = this;
+            db.answers.child(index).remove().then(function() {
+                Vue.delete(self.answers, index);
+            });
+        },
+        save: function() {
+            var self = this;
+            db.questions.child(this.$route.params.slug).update({
+                description: self.question.description
+            }).then(function() {
+                for (index in self.answers) {
+                    var _answer = self.answers[index];
+                    db.answers.child(index).update({
+                        description: _answer.description,
+                        tracks: _answer.tracks
+                    });
+                }
+
+                self.$router.push('/questions');
+            });
+        }
+    }
+};
+
+Vue.component('selectize-vue', {
+    template: '<input class="form-control u-full-width select-tracks" v-bind:value="value" placeholder="Add track" type="text" required>',
+    props: ['value'],
+    created: function() {
+        var self = this;
+        db.tracks.once('value', function(snapshot) {
+            var tracks = [];
+            for (i in snapshot.val()) {
+                tracks.push(snapshot.val()[i]);
+            }
+            $(self.$el).selectize({
+                persist: false,
+                maxItems: null,
+                valueField: 'slug',
+                labelField: 'name',
+                searchField: ['name', 'details'],
+                options: tracks,
+                onChange: function(value) {
+                    self.$emit('input', value);
+                }
+            });
+
+        });
+    }
+})
 
 var notFound = {
     template: '#NotFound'
@@ -186,7 +349,8 @@ var router = new VueRouter({
         { name: 'newTrack', path: '/tracks/new', component: newTrack },
         { name: 'editTrack', path: '/tracks/:slug', component: editTrack },
         { name: 'questionList', path: '/questions', component: questionList },
-        { name: 'question', path: '/questions/:id', component: question },
+        { name: 'newQuestion', path: '/questions/new', component: newQuestion },
+        { name: 'editQuestion', path: '/questions/:slug', component: editQuestion },
         { name: '404', path: '/404', component: notFound }
     ]
 });
@@ -198,11 +362,12 @@ var app = new Vue({ router: router }).$mount('#app');
 
 // Utility functions
 
-function slugify(text) {
-    return text.toString().toLowerCase()
-        .replace(/\s+/g, '-') // Replace spaces with -
-        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
-        .replace(/\-\-+/g, '-') // Replace multiple - with single -
-        .replace(/^-+/, '') // Trim - from start of text
-        .replace(/-+$/, ''); // Trim - from end of text
-}
+function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+};

@@ -4,7 +4,7 @@
  * https://github.com/devcenter-square/coding101
  * @author Devcenter
  * @version 0.0.1
- * Copyright 2016. MIT licensed.
+ * Copyright 2017. MIT licensed.
  */
 // We can use this file for all DOM editing functions,
 // so that we leave the main app functions in app.js
