@@ -1,0 +1,26 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "tracks": {
+      ".indexOn": [
+        "slug"
+      ]
+    },
+    "resources": {
+      ".indexOn": [
+        "track"
+      ]
+    },
+    "questions": {
+      ".indexOn": [
+        "slug"
+      ]
+    },
+    "answers": {
+      ".indexOn": [
+        "question"
+      ]
+    }
+  }
+}
