@@ -1,0 +1,137 @@
+header{
+	overflow: auto;
+}
+body{
+	font-family: cursive;
+	background: #f8fdff;
+}
+#logo{
+	width: 40px;
+	float: left;
+}
+#co{
+	float: right;
+}
+.main{
+    clear: both;
+	text-align: center;
+	margin-top: 70px;
+}
+h3{
+	font-size: 30px;
+}
+p{
+	font-size: 20px;
+}
+button{
+	background: #32ad75;
+	width: 120px;
+	height: 40px;
+	color: #fff;
+}
+#paragraph{
+	text-align: center;
+	font-weight: bold;
+	margin-top: 70px;
+}
+.container{
+	margin: 0px auto;
+	width: 100%;
+	margin-top: 70px;
+	overflow: hidden;
+
+	text-align: center;
+}
+
+.center{
+	width: 950px;
+	margin: 10px auto;
+}
+
+
+#bg{
+	width: 400px;
+	height: 400px;
+} 
+
+.link a{
+	color:#fff;
+	font-weight: bolder;
+	text-decoration: none;
+	font-size: 1.2em;
+	
+}
+
+.link{
+	z-index: 9;
+	display: block;
+	position: relative;
+	margin-top: 30px;
+}
+
+.showcase{
+	-webkit-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.75);
+border-radius: 5px 5px 5px 5px;
+-moz-border-radius: 5px 5px 5px 5px;
+-webkit-border-radius: 5px 5px 5px 5px;
+border: 0px solid #000000;
+}
+
+.showcase1{
+	background: url("../images/student.jpg") no-repeat ;
+	background-size: cover;
+	padding: 15px;
+	height: 200px;
+	width: 250px;
+	float: left;
+	margin-left: 25px; 
+}
+
+.overlay {
+  position: relative;
+
+}
+
+.overlay:before{
+  position: absolute;
+  content:" ";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  /*display: none;*/
+  z-index:0;
+}
+
+.blue:before {
+  background-color: rgba(83,192,232,0.8);
+}
+
+.green:before {
+  background-color: rgba(124,201,164,0.8);
+}
+
+.dark:before {
+  background-color: rgba(46,93,111,0.8);
+}
+.showcase2{
+	background: url("../images/student.jpg") no-repeat;
+	background-size: cover;
+	padding: 15px;
+	height: 200px;
+	width: 250px;
+	float: left;
+	margin-left: 25px; 
+	
+}
+.showcase3{
+	background: url("../images/student.jpg") no-repeat;
+	background-size: cover;
+	padding: 15px;
+	height: 200px;
+	width: 250px;
+	float: left;
+	margin-left: 25px; 
+	}
