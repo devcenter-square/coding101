@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #f8fdff;
+    font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
 .grid {
     margin: 0 auto;
     max-width: 1200px;
