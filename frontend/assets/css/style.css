@@ -5,9 +5,42 @@
     box-sizing: border-box;
 }
 
+.container {
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
 body {
     background-color: #f8fdff;
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+}
+
+@media (min-width:768px) {
+    .container {
+        width: 750px
+    }
+}
+
+@media (min-width:992px) {
+    .container {
+        width: 970px
+    }
+}
+
+@media (min-width:1200px) {
+    .container {
+        width: 1170px
+    }
+}
+
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px
 }
 
 .grid {
@@ -20,6 +53,8 @@ body {
     width: 100%;
     margin-bottom: 20px;
     display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .col-1 {
@@ -69,6 +104,12 @@ body {
 .col-12 {
     width: 100%;
 }
+
+
+/* .nav-icon {
+    width: 64px;
+    height: 64px;
+} */
 
 #inner {
     display: table;
@@ -126,17 +167,26 @@ body {
 
 #inner a:link,
 #inner a:visited {
-    background-color: rgba(80, 210, 104, 0.98);
+    /* background-color: rgba(80, 210, 104, 0.98);
+    padding: 14px 25px; */
     color: white;
-    padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    background-color: #32ad75;
+    padding: 10px 30px;
+    border-radius: 2px;
 }
 
 #inner a:hover,
 #inner a:active {
     background-color: #5FBA87;
+}
+
+h2,
+h3 {
+    color: #777;
+    font-family: "apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
 }
 
 .center-div {
