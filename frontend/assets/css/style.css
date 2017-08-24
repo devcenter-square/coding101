@@ -181,6 +181,7 @@ body {
     background-color: #32ad75;
     padding: 10px 30px;
     border-radius: 2px;
+    letter-spacing: 1.2px;
 }
 
 #inner a:hover,
