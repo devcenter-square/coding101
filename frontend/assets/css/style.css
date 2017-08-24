@@ -15,6 +15,7 @@
 
 body {
     background-color: #f8fdff;
+    letter-spacing: 0.3px;
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
 }
 
@@ -183,9 +184,16 @@ body {
     background-color: #5FBA87;
 }
 
+.sec {
+    font-weight: 500;
+    color: #777;
+    font-family: "apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
+}
+
 h2,
 h3 {
-    color: #777;
+    font-weight: 500;
+    /* color: #777; */
     font-family: "apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
 }
 
