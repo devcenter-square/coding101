@@ -133,13 +133,17 @@ body {
 .background {
     background: url(../img/student.jpg);
     background-size: cover;
-    padding: 15px;
+    height: 250px;
 }
 
 .transbox {
-    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    opacity: 0.8;
     filter: alpha(opacity=60);
     text-align: center;
+    padding: 15px;
+    padding-top: 80px;
 }
 
 .transbox p {
@@ -149,7 +153,7 @@ body {
 }
 
 .blue {
-    background-color: #00bfff;
+    background-color: #08b2ea;
 }
 
 .green {
