@@ -130,10 +130,18 @@ body {
     */
 }
 
+div .background {
+    -webkit-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+}
+
 .background {
     background: url(../img/student.jpg);
     background-size: cover;
-    height: 250px;
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
 }
 
 .transbox {
@@ -144,6 +152,7 @@ body {
     text-align: center;
     padding: 15px;
     padding-top: 80px;
+    border-radius: 10px;
 }
 
 .transbox p {
