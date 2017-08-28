@@ -112,7 +112,8 @@ body {
     height: 64px;
 } */
 
-#inner {
+#inner,
+#inner-blue {
     display: table;
     width: 5%;
     margin: 0 auto;
@@ -144,6 +145,13 @@ div .background {
     border-radius: 10px;
 }
 
+.background-res {
+    background-size: cover;
+    height: 100px;
+    width: 200px;
+    border-radius: 10px;
+}
+
 .transbox {
     height: 100%;
     width: 100%;
@@ -151,7 +159,7 @@ div .background {
     filter: alpha(opacity=60);
     text-align: center;
     padding: 15px;
-    padding-top: 80px;
+    padding-top: 25px;
     border-radius: 10px;
 }
 
@@ -173,6 +181,10 @@ div .background {
     background-color: #34444A;
 }
 
+.dark-res {
+    background-color: #082029;
+}
+
 #sec-cat,
 #grad-awt-cat,
 #empl-cat {
@@ -187,7 +199,7 @@ div .background {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    background-color: #32ad75;
+    background-color: #31AD74;
     padding: 10px 30px;
     border-radius: 2px;
     letter-spacing: 1.2px;
@@ -195,7 +207,26 @@ div .background {
 
 #inner a:hover,
 #inner a:active {
-    background-color: #5FBA87;
+    background-color: #345DC6;
+}
+
+#inner-blue a:link,
+#inner-blue a:visited {
+    /* background-color: rgba(80, 210, 104, 0.98);
+    padding: 14px 25px; */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #66A1E8;
+    padding: 10px 30px;
+    border-radius: 2px;
+    letter-spacing: 1.2px;
+}
+
+#inner-blue a:hover,
+#inner-blue a:active {
+    background-color: #9188F0;
 }
 
 .sec {
@@ -205,7 +236,8 @@ div .background {
 }
 
 h2,
-h3 {
+h3,
+label {
     font-weight: 500;
     /* color: #777; */
     font-family: "apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif";
@@ -222,4 +254,20 @@ h3 {
     height: 100%;
     background-color: #ccc;
     border-radius: 3px;
+}
+
+.questions-bx,
+.result-bx {
+    background-color: white;
+}
+
+.qst-cont,
+.rst-cont {
+    align-items: center;
+    /* padding-left: 120px;
+    padding-right: 120px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px
 }
