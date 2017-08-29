@@ -17,10 +17,10 @@ body {
     background-color: #f8fdff;
     letter-spacing: 0.3px;
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
-    text-align: center;
+    /*  text-align: center;
     padding: 15px;
     padding-top: 80px;
-    border-radius: 10px;
+    border-radius: 10px; */
 }
 
 @media (min-width:768px) {
