@@ -3,64 +3,103 @@
 
 <head>
     <title>question</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
-    <div id="logo">
-        <a href="index.html">
-            <img src="assets/img/devcenter-logo.svg">
-        </a>
-
-    </div>
-    <div id="name">
-        <h2>Coding101</h2>
-    </div>
-
-    <form>
-        <div id="quiz">
-            <label>I am a Secondary School Graduate</label>
-
-            <div class="quest-1">
-                <li>
-
-                    <h3>What do you prefer as a hobby/ what do you do in your free time</h3>
+    <div class="container">
+        <div class="row">
+            <div class="nav-icon col-6">
+                <a href="index.html"><img src="assets/img/logo.png"> </a>
+            </div>
+            <div class="col-6 nav-link" style="text-align:right">
+                <h3>Coding101</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align:center">
+                <h2>I am a Secondary School Graduate</h2>
+            </div>
+        </div>
+        <div class="qst-cont">
+            <div class="questions-bx sec">
+                <div class="question-#">
+                    <p>What do you prefer as a hobby/ what do you do in your free time</p>
+                </div>
+                <div class="hr">
                     <hr>
-
+                </div>
+                <div class="options">
                     <div>
-                        <input type="radio" name="question-1-answers" id="question-1-answers-A" value="A" />
-                        <label for="question-1-answers-A">A) Computer Styled Sections </label>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-A" value="A" />
+                        <label for="question-1-answers-A"> Computer Styled Sections </label>
                     </div>
 
                     <div>
-                        <input type="radio" name="question-1-answers" id="question-1-answers-B" value="B" />
-                        <label for="question-1-answers-B">B) Cascading Style Sheets</label>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-B" value="B" />
+                        <label for="question-1-answers-B"> Cascading Style Sheets</label>
                     </div>
 
                     <div>
-                        <input type="radio" name="question-1-answers" id="question-1-answers-C" value="C" />
-                        <label for="question-1-answers-C">C) Crazy Solid Shapes</label>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-C" value="C" />
+                        <label for="question-1-answers-C"> Crazy Solid Shapes</label>
                     </div>
 
                     <div>
-                        <input type="radio" name="question-1-answers" id="question-1-answers-D" value="D" />
-                        <label for="question-1-answers-D">D) None of the above</label>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-D" value="D" />
+                        <label for="question-1-answers-D"> None of the above</label>
                     </div>
-
-                </li>
-
+                </div>
             </div>
         </div>
 
-        <div>
-            <div id="button">
-                <button type="button">Back</button>
-            </div>
-            <div id="button">
-                <button type="button">Next</button>
+        <div class="qst-cont">
+            <div class="questions-bx sec">
+                <div class="question-#">
+                    <p>What do you prefer as a hobby/ what do you do in your free time</p>
+                </div>
+                <div class="hr">
+                    <hr>
+                </div>
+                <div class="options">
+                    <div>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-A" value="A" />
+                        <label for="question-1-answers-A"> Computer Styled Sections </label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-B" value="B" />
+                        <label for="question-1-answers-B"> Cascading Style Sheets</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-C" value="C" />
+                        <label for="question-1-answers-C"> Crazy Solid Shapes</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" name="question-1-answers" id="question-1-answers-D" value="D" />
+                        <label for="question-1-answers-D"> None of the above</label>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </form>
+        <!-- <div class="row">
+            <div class="col-6" id="outer">
+                <div id="inner"><a href="#">Back</a></div>
+            </div>
+            <div class="col-6" id="outer">
+                <div id="inner"><a href="#">Next</a></div>
+            </div>
+
+        </div> -->
+        <p id="inner" align="center">
+            <a href="#">Back</a>
+            <a href="#">Next</a>
+        </p>
+
+    </div>
 </body>
 
 </html>
