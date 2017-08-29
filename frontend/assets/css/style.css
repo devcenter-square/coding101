@@ -17,10 +17,13 @@ body {
     background-color: #f8fdff;
     letter-spacing: 0.3px;
     font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+    font-size: 15px;
+    letter-spacing: 1px;
+    border-radius: 10px;
     /*  text-align: center;
     padding: 15px;
     padding-top: 80px;
-    border-radius: 10px; */
+     */
 }
 
 @media (min-width:768px) {
@@ -119,7 +122,7 @@ body {
 #inner,
 #inner-blue {
     display: table;
-    width: 5%;
+    /* width: 5%; */
     margin: 0 auto;
     /*
     background-color: #4CAF50;
@@ -172,6 +175,11 @@ div .background {
     font-size: 15px;
     letter-spacing: 1px;
     color: #ffffff;
+    padding-top: 50px;
+}
+
+div.dark-res p {
+    padding-top: 10px;
 }
 
 .blue {
@@ -194,6 +202,8 @@ div .background {
 #grad-awt-cat,
 #empl-cat {
     margin: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 #inner a:link,
@@ -208,6 +218,8 @@ div .background {
     padding: 10px 30px;
     border-radius: 2px;
     letter-spacing: 1.2px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 #inner a:hover,
@@ -259,11 +271,14 @@ label {
     height: 100%;
     background-color: #ccc;
     border-radius: 3px;
+    box-shadow: 10px 10px 5px #888888;
 }
 
 .questions-bx,
 .result-bx {
     background-color: white;
+    box-shadow: 3px 3px 5px #888888;
+    padding: 20px;
 }
 
 .qst-cont,
