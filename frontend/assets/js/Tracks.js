@@ -25,11 +25,26 @@ var Tracks = (function (Database) {
                     .then(function (snapshot) {
                         tracks = []; //any time we load tracks, always clear our tracks array
                         var loadedTracks = snapshot.val();
+
+                        var resourcesPromise = [];
                         for (var i in loadedTracks) {
                             tracks.push(loadedTracks[i]);
+                            //this is to load up resources for each track
+                            resourcesPromise.push(Database.resources.orderByChild('track').equalTo(loadedTracks[i].slug).once('value'));
                         }
 
-                        resolve(tracks);
+
+                        // load up all resources for each track
+                        Promise.all(resourcesPromise)
+                            .then(function (values) {
+                                for (var i = 0; i < values.length; i++) {
+                                    tracks[i].resources = values[i].val() || {};
+                                }
+
+                                //finally resolve our fetch here, that we are done with all the fetching
+                                resolve(tracks);
+                            }).catch(reject);
+
                     })
                     .catch(reject);
             });
